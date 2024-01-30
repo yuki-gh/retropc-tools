@@ -46,7 +46,7 @@ int main(int argc, const char **argv)
 	num:		num of chars\n\
 	padding:	num of padding bytes between chars\n\
 	skip:		num of bytes to skip from beginning (0xHEX ok)\n\
-	options:	y = y direction first\n", stderr);
+	options:	y = y direction first, f = flip bits\n", stderr);
 		exit(EXIT_FAILURE);
 	}
 
@@ -58,6 +58,7 @@ int main(int argc, const char **argv)
 	int skip = (argc > 6) ? strtol(argv[6], NULL, 0) : 0;
 	const char *options = (argc > 7) ? argv[7] : "";
 	bool yfirst = strchr(options, 'y') != NULL;
+	bool flip   = strchr(options, 'f') != NULL;
 
 	int fd = open (infile, O_RDONLY | O_BINARY);
 	if (fd < 0)
@@ -67,6 +68,7 @@ int main(int argc, const char **argv)
 	}
 	lseek(fd, skip, SEEK_SET);
 
+	int mask_init = flip ? 0x01 : 0x80;
 	for (int ch = 0; ch < num; ch++)
 	{
 		printf("\nchar %d (0x%x)\n", ch, ch);
@@ -78,21 +80,22 @@ int main(int argc, const char **argv)
 
 		for (int y = 0; y < height; y++)
 		{
-			int mask = 0x80;
+			int mask = mask_init;
 			unsigned char *pp = p;
 			for (int x = 0; x < width ; x++)
 			{
 				putchar((*p & mask) ? 'O' : '.');
-				if ((mask >>= 1) == 0)
+				mask = flip ? (mask << 1) : (mask >> 1);
+				if ((mask & 0xff) == 0)
 				{
-					mask = 0x80;
+					mask = mask_init;
 					p += yfirst ? height : 1;
 				}
 			}
 			putchar('\n');
 			if (yfirst)
 				p = pp + 1;
-			else if ( mask != 0x80 )
+			else if ( mask != mask_init )
 				p++;
 		}
 		lseek(fd, padding, SEEK_CUR);
