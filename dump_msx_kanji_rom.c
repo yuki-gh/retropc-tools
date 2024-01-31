@@ -127,7 +127,11 @@ int main(int argc, const char **argv)
 {
 	const char *infile = argv[1];
 
-	int fd = open (infile, O_RDONLY | O_BINARY);
+	int fd = open (infile, O_RDONLY
+#ifdef O_BINARY
+		| O_BINARY
+#endif
+		);
 	if (fd < 0)
 		exit(1);
 

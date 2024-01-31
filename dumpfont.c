@@ -60,7 +60,11 @@ int main(int argc, const char **argv)
 	bool yfirst = strchr(options, 'y') != NULL;
 	bool flip   = strchr(options, 'f') != NULL;
 
-	int fd = open (infile, O_RDONLY | O_BINARY);
+	int fd = open (infile, O_RDONLY
+#ifdef O_BINARY
+		| O_BINARY
+#endif
+		);
 	if (fd < 0)
 	{
 		perror(infile);
