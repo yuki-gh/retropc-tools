@@ -71,6 +71,7 @@ int main(int argc, const char **argv)
 		exit(EXIT_FAILURE);
 	}
 	lseek(fd, skip, SEEK_SET);
+	printf("0x%x - 0x%x\n", skip, skip + (width / 8 * height + padding) * num - 1);
 
 	int mask_init = flip ? 0x01 : 0x80;
 	for (int ch = 0; ch < num; ch++)
