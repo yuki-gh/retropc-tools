@@ -1,0 +1,14 @@
+*.rom
+*.ROM
+*.fnt
+*.FNT
+*.bin
+*.BIN
+*.dat
+*.DAT
+
+*.X1
+*.6[012648]
+
+*.png
+*.pbm
