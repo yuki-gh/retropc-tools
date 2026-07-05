@@ -19,8 +19,8 @@ do
 		echo $x-$y
 		for r in $(seq 0 3)
 		do
-			dd if="$1" bs=1 count=1 skip=$((0x50800+$x*64+$y*4+$r)) 2>/dev/null >> out.bin
-			dd if="$1" bs=1 count=1 skip=$((0x40800+$x*64+$y*4+$r)) 2>/dev/null >> out.bin
+			dd if="$infile" bs=1 count=1 skip=$((0x50800+$x*64+$y*4+$r)) 2>/dev/null >> out.bin
+			dd if="$infile" bs=1 count=1 skip=$((0x40800+$x*64+$y*4+$r)) 2>/dev/null >> out.bin
 		done
 	done
 	cat header.txt out.bin > $x.pbm
@@ -40,8 +40,8 @@ do
 		echo $x-$y
 		for r in $(seq 0 7)
 		do
-			dd if="$1" bs=1 count=1 skip=$((0x50000+$x*128+$y*8+$r)) 2>/dev/null >> out.bin
-			dd if="$1" bs=1 count=1 skip=$((0x40000+$x*128+$y*8+$r)) 2>/dev/null >> out.bin
+			dd if="$infile" bs=1 count=1 skip=$((0x50000+$x*128+$y*8+$r)) 2>/dev/null >> out.bin
+			dd if="$infile" bs=1 count=1 skip=$((0x40000+$x*128+$y*8+$r)) 2>/dev/null >> out.bin
 		done
 	done
 	cat header.txt out.bin > $x.pbm
@@ -59,8 +59,8 @@ do
 	do
 		for sub in 0 1
 		do
-			dd if="$1" skip=$((0x41200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
-			dd if="$1" skip=$((0x51200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
+			dd if="$infile" skip=$((0x41200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
+			dd if="$infile" skip=$((0x51200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
 			cat header.txt right.bin > right.pbm
 			cat header.txt  left.bin >  left.pbm
 			convert +append left.pbm right.pbm $ku-$slice-$sub.png
@@ -77,8 +77,8 @@ do
 	do
 		for sub in 0 1
 		do
-			dd if="$1" skip=$((0x46000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
-			dd if="$1" skip=$((0x56000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
+			dd if="$infile" skip=$((0x46000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
+			dd if="$infile" skip=$((0x56000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
 			cat header.txt right.bin > right.pbm
 			cat header.txt  left.bin >  left.pbm
 			convert +append left.pbm right.pbm $ku-$slice-$sub.png
@@ -93,8 +93,8 @@ do
 	do
 		for sub in 0 1
 		do
-			dd if="$1" skip=$((0x44000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
-			dd if="$1" skip=$((0x54000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
+			dd if="$infile" skip=$((0x44000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
+			dd if="$infile" skip=$((0x54000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
 			cat header.txt right.bin > right.pbm
 			cat header.txt  left.bin >  left.pbm
 			convert +append left.pbm right.pbm $ku-$slice-$sub.png
@@ -115,7 +115,7 @@ do
 	do
 		for sub in 0 1
 		do
-			dd if="$1" skip=$((0x68000+0x8000*$slice+32*32*($ku-48)+32*16*$sub)) bs=1 count=$((32*16)) of=out.bin
+			dd if="$infile" skip=$((0x68000+0x8000*$slice+32*32*($ku-48)+32*16*$sub)) bs=1 count=$((32*16)) of=out.bin
 			cat header.txt out.bin > $ku-$slice-$sub.pbm
 		done
 	done
@@ -130,7 +130,7 @@ do
 	do
 		for sub in 0 1
 		do
-			dd if="$1" skip=$((0x62000+0x2000*$slice+32*32*($ku-80)+32*16*$sub)) bs=1 count=$((32*16)) of=out.bin
+			dd if="$infile" skip=$((0x62000+0x2000*$slice+32*32*($ku-80)+32*16*$sub)) bs=1 count=$((32*16)) of=out.bin
 			cat header.txt out.bin > $ku-$slice-$sub.pbm
 		done
 	done
