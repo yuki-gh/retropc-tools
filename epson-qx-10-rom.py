@@ -55,14 +55,14 @@ def main():
     with open(sys.argv[1], "rb") as f:
         rom = f.read()
 
-    if len(rom) not in (2048, 3072, 16384):
-        print("Input file must be 2048 or 3072 or 16384 bytes.")
+    if len(rom) not in (2048, 3072, 5120, 16384):
+        print("Input file must be 2K, 3K, 5K or 16K bytes.")
         sys.exit(1)
 
     glyphs = len(rom) // 32
     cols = glyphs // 16
     rows = 16
-    cut = cols == 6 or cols == 4
+    cut = cols in (4, 6, 10)
 
     GLYPH_W = 14
     GLYPH_H = 18
