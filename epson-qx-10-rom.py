@@ -48,21 +48,17 @@ def transform(glyph, cut):
 
 
 def main():
-    if len(sys.argv) != 3:
-        print(f"Usage: {sys.argv[0]} BINFILE PNGFILE")
+    if not len(sys.argv) in (3, 4):
+        print(f"Usage: {sys.argv[0]} BINFILE PNGFILE [--cut]")
         sys.exit(1)
 
     with open(sys.argv[1], "rb") as f:
         rom = f.read()
 
-    if len(rom) not in (2048, 3072, 5120, 16384):
-        print("Input file must be 2K, 3K, 5K or 16K bytes.")
-        sys.exit(1)
-
     glyphs = len(rom) // 32
     cols = glyphs // 16
     rows = 16
-    cut = cols in (4, 6, 10)
+    cut = len(sys.argv) == 4
 
     GLYPH_W = 14
     GLYPH_H = 18
