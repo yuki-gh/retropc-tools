@@ -61,12 +61,12 @@ do
 		do
 			dd if="$infile" skip=$((0x41200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
 			dd if="$infile" skip=$((0x51200+0x1000*$slice+16*32*($ku-1)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
-			cat header.txt right.bin > right.pbm
-			cat header.txt  left.bin >  left.pbm
-			convert +append left.pbm right.pbm $ku-$slice-$sub.png
+			cat header.txt right.bin > $ku-$slice-$sub-r.pbm
+			cat header.txt  left.bin > $ku-$slice-$sub-l.pbm
+#			convert +append left.pbm right.pbm $ku-$slice-$sub.png
 		done
 	done
-	convert +append $ku-?-?.png 0$ku.png
+	convert +append $ku-?-?-?.pbm 0$ku.png
 done
 
 # 第一水準 16～31区
@@ -79,12 +79,12 @@ do
 		do
 			dd if="$infile" skip=$((0x46000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
 			dd if="$infile" skip=$((0x56000+0x4000*$slice+16*32*($ku-16)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
-			cat header.txt right.bin > right.pbm
-			cat header.txt  left.bin >  left.pbm
-			convert +append left.pbm right.pbm $ku-$slice-$sub.png
+			cat header.txt right.bin > $ku-$slice-$sub-r.pbm
+			cat header.txt  left.bin > $ku-$slice-$sub-l.pbm
+#			convert +append left.pbm right.pbm $ku-$slice-$sub.png
 		done
 	done
-	convert +append $ku-?-?.png $ku.png
+	convert +append $ku-?-?-?.pbm $ku.png
 done
 
 for ku in $(seq 32 47)
@@ -95,15 +95,15 @@ do
 		do
 			dd if="$infile" skip=$((0x44000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=right.bin
 			dd if="$infile" skip=$((0x54000+0x4000*$slice+16*32*($ku-32)+16*16*$sub)) bs=1 count=$((16*16)) of=left.bin
-			cat header.txt right.bin > right.pbm
-			cat header.txt  left.bin >  left.pbm
-			convert +append left.pbm right.pbm $ku-$slice-$sub.png
+			cat header.txt right.bin > $ku-$slice-$sub-r.pbm
+			cat header.txt  left.bin > $ku-$slice-$sub-l.pbm
+#			convert +append left.pbm right.pbm $ku-$slice-$sub.png
 		done
 	done
-	convert +append $ku-?-?.png $ku.png
+	convert +append $ku-?-?-?.pbm $ku.png
 done
 
-rm header.txt right.bin left.bin right.pbm left.pbm *-?-?.png
+rm header.txt right.bin left.bin *-?-?-?.pbm
 
 # 第二水準 48～79区
 
