@@ -147,10 +147,11 @@ int main(int argc, const char **argv)
 	// 0x7800 blank 8x16 128chars
 
 	dumpw(fd, "kanji1.pbm", 96*32, 0x8000, 96);
+	// 0x1fa80 blank
 	dumpw(fd, "kanji2.pbm", 96*37, 0x20000, 96);
+	// 0x3b0a0 blank
 
 	dumpw(fd, "symbols.pbm", 96*4, 0x3bc00, 32);
-
 	// 0x3ec00 blank
 
 }
